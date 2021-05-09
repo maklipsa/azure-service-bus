@@ -26,7 +26,13 @@ if [ "$resourceGroup" == "" ] || [ "$namespaceName" == "" ]; then
     exit 1 
 fi
 
-cx1=`az group deployment create --name azuredeploy --resource-group $resourceGroup --template-file $script_full_path/azuredeploy.json --parameters serviceBusNamespaceName=$namespaceName` 
+cx1=`
+az deployment group create \
+    --resource-group $resourceGroup \
+    --template-file $script_full_path/azuredeploy.json \
+    --parameters serviceBusNamespaceName=$namespaceName
+    --name azuredeploy`
+
 if [ $? -eq 0 ]
 then
   cx=`echo $cx1 | jq ".properties.outputs.sendListenConnectionString.value"`
@@ -40,6 +46,8 @@ then
   echo export SB_SAMPLES_QUEUENAME="BasicQueue"
   echo export SB_SAMPLES_TOPICNAME="BasicTopic"
   echo export SB_SAMPLES_SUBSCRIPTIONNAME="Subscription1"
+
+  
 else
   echo "Unable to create/update Azure deployment" >&2
 fi

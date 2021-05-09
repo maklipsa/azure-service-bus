@@ -45,6 +45,11 @@ then
   echo export SB_SAMPLES_QUEUENAME="BasicQueue"
   echo export SB_SAMPLES_TOPICNAME="BasicTopic"
   echo export SB_SAMPLES_SUBSCRIPTIONNAME="Subscription1"
+
+  echo $"SB_SAMPLES_CONNECTIONSTRING="$cx"
+  SB_SAMPLES_QUEUENAME="BasicQueue"
+  SB_SAMPLES_TOPICNAME="BasicTopic"
+  SB_SAMPLES_SUBSCRIPTIONNAME="Subscription1"" > $destfile
 else
   echo "Unable to create/update Azure deployment" >&2
 fi
